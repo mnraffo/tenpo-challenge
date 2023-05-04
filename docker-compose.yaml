@@ -1,0 +1,48 @@
+# docker-compose.yml - Only for local debug purposes
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: loc-postgres
+    logging:
+      driver: none
+    environment:
+      TZ: UTC
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+
+  redis:
+    image: redis:6-alpine
+    container_name: loc-redis
+    logging:
+      driver: none
+    environment:
+      TZ: UTC
+    ports:
+      - '6379:6379'
+
+  ms-fee:
+    image: ms-fee
+    container_name: loc-ms-fee
+    environment:
+      TZ: UTC
+    ports:
+      - '9090:9090'
+
+  ms-sum:
+    image: ms-sum
+    container_name: loc-ms-sum
+    environment:
+      TZ: UTC
+      SPRING_DATASOURCE_URL: jdbc:postgresql://loc-postgres:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_REDIS_HOST: loc-redis
+      SPRING_REDIS_PORT: 6379
+      TENPO_MS_FEE_BASE_URL: http://loc-ms-fee:9090/ms-fee
+    ports:
+      - '9091:9091'
