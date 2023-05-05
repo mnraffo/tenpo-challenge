@@ -26,7 +26,7 @@ services:
       - '6379:6379'
 
   ms-fee:
-    image: ms-fee
+    image: matiasnraffo/ms-fee:v0.0.1
     container_name: loc-ms-fee
     environment:
       TZ: UTC
@@ -34,7 +34,7 @@ services:
       - '9090:9090'
 
   ms-sum:
-    image: ms-sum
+    image: matiasnraffo/ms-sum:v0.0.1
     container_name: loc-ms-sum
     environment:
       TZ: UTC
